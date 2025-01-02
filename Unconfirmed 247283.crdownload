@@ -1,0 +1,131 @@
+# Problem 1: Square and sort a sorted array of positive and negative numbers
+def sorted_squares(arr):
+    n = len(arr)
+    result = [0] * n
+    left, right = 0, n - 1
+    index = n - 1
+    
+    while left <= right:
+        left_square = arr[left] ** 2
+        right_square = arr[right] ** 2
+        
+        if left_square > right_square:
+            result[index] = left_square
+            left += 1
+        else:
+            result[index] = right_square
+            right -= 1
+        
+        index -= 1
+    
+    return result
+
+# Example input
+arr = [-12, -8, -7, -5, 2, 4, 5, 11, 15]
+print(sorted_squares(arr))
+
+
+# Problem 2: Immutable class with specific attributes
+from typing import List
+from datetime import date
+
+class Address:
+  
+  def __init__(self, street: str, city: str, zip_code: str):
+        self.street = street
+        self.city = city
+        self.zip_code = zip_code
+    
+    def __repr__(self):
+        return f"{self.street}, {self.city}, {self.zip_code}"
+
+class Employee:
+    def __init__(self, name: str, emp_id: str, date_of_joining: date, addresses: List[Address]):
+        self.__name = name
+        self.__emp_id = emp_id
+        self.__date_of_joining = date_of_joining
+        self.__addresses = addresses
+    
+    @property
+    def name(self):
+        return self.__name
+    
+    @property
+    def emp_id(self):
+        return self.__emp_id
+    
+    @property
+    def date_of_joining(self):
+        return self.__date_of_joining
+    
+    @property
+    def addresses(self):
+        return self.__addresses
+
+# Example usage
+address1 = Address("123 Elm St", "Springfield", "12345")
+address2 = Address("456 Oak St", "Shelbyville", "67890")
+emp = Employee("John Doe", "E123", date(2020, 1, 1), [address1, address2])
+print(emp.name, emp.emp_id, emp.date_of_joining, emp.addresses)
+
+
+# Problem 3: Sort Red, Green, Blue balls with O(n) time and O(1) space
+def sort_balls(arr):
+    low, mid, high = 0, 0, len(arr) - 1
+    
+    while mid <= high:
+        if arr[mid] == 'R':
+            arr[low], arr[mid] = arr[mid], arr[low]
+            low += 1
+            mid += 1
+        elif arr[mid] == 'G':
+            mid += 1
+        else:
+            arr[mid], arr[high] = arr[high], arr[mid]
+            high -= 1
+            
+    return arr
+
+# Example input
+balls = ['R', 'G', 'B', 'G', 'G', 'R', 'B', 'B', 'G']
+print(sort_balls(balls))
+
+
+# Problem 4: Minimum number of platforms required
+from typing import List
+
+def find_platforms(arr: List[str], dep: List[str]) -> int:
+    arr.sort()
+    dep.sort()
+    
+    platforms_needed = 1
+    result = 1
+    i, j = 1, 0
+    
+    while i < len(arr) and j < len(dep):
+        if arr[i] <= dep[j]:
+            platforms_needed += 1
+            i += 1
+        else:
+            platforms_needed -= 1
+            j += 1
+        
+        result = max(result, platforms_needed)
+    
+    return result
+
+# Example input
+arrival = ['9:00', '9:40', '9:50', '11:00', '15:00', '18:00']
+departure = ['9:10', '12:00', '11:20', '11:30', '19:00', '20:00']
+print(find_platforms(arrival, departure))
+
+
+
+# Problem 5: Sort hashmap by value
+def sort_map_by_value(map_data):
+    sorted_map = dict(sorted(map_data.items(), key=lambda item: item[1]))
+    return sorted_map
+
+# Example input
+map_data = {101: "John Doe", 102: "Jane Smith", 103: "Peter Johnson"}
+print(sort_map_by_value(map_data))
